@@ -8,18 +8,30 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+        /* 基本佈局設定 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Raleway", sans-serif;
+            background-color: #f4f4f9;
+        }
+
         .container {
             display: flex;
             flex-direction: column;
             width: 100%;
         }
 
+        /* 標題背景圖 */
         .hero-img {
             background-image: url("img/沒有動物.jpg");
             height: 300px;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
         }
 
@@ -27,55 +39,52 @@
             font-family: fantasy;
             color: rgb(0, 0, 0);
             text-align: center;
-            height: 25px;
             font-size: 30px;
             letter-spacing: 6px;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 5px;
         }
 
-        .links {
-            display: flex;
-            flex-direction: row;
-            text-align: center;
-        }
-
-        ul {
+        /* 導覽列 */
+        ul.links {
             list-style-type: none;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             background-color: #081472fa;
-            position: -webkit-sticky;
-            /* Safari */
             position: sticky;
             top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
         }
 
-        }
-
-        li {
-            float: left;
+        ul.links li {
             flex: 1;
         }
 
-        li a {
+        ul.links li h5 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        ul.links li a {
             display: block;
             color: white;
             text-align: center;
-            padding: 14px 16px;
+            padding: 16px 5px;
             text-decoration: none;
         }
 
-        li a:hover {
+        ul.links li a:hover {
             background-color: #000000;
         }
 
-        li.dropdown {
-            display: inline-block;
-        }
-
+        /* 下拉選單樣式 */
         .dropdown {
             position: relative;
-            display: inline-block;
         }
 
         .dropdown-content {
@@ -84,38 +93,89 @@
             background-color: #f9f9f9;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
+            z-index: 1001;
+            left: 0;
         }
 
         .dropdown-content a {
-            color: black;
+            color: black !important;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
             text-align: left;
         }
 
-        .dropdown-content a:hover {
-            background-color: #E7E4EB;
+        /* 相簿網格核心設定：每行三張 */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 關鍵：分成三欄 */
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .dropdown:hover .dropdown-content {
+        /* 單張相片外框 */
+        .photo-item {
+            position: relative;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* 讓不同比例的照片整齊填充 */
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 展開放大效果與文字敘述 */
+        .photo-item .expand-view {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.3);
+            z-index: 1005;
+            width: 350px;
+            border-radius: 10px;
+        }
+
+        .photo-item:hover .expand-view {
             display: block;
         }
 
-        .desc {
-            padding: 15px;
-            text-align: center;
-            font-family: sans-serif;
+        .expand-view img {
+            width: 100%;
+            height: auto;
         }
 
-        h3 {
-            font-family: "Georgia", serif;
-            color: rgb(255, 255, 255);
-            text-align: center;
-            font-size: 9px;
+        .expand-desc {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
         }
 
+        .desc-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #081472;
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* 標題與頁尾 */
         h4 {
             font-family: fantasy;
             color: rgb(0, 0, 0);
@@ -123,39 +183,35 @@
             font-size: 30px;
             letter-spacing: 6px;
             text-shadow: 2px 2px 5px #777;
+            margin: 40px 0 20px 0;
         }
-
-        h5 {
-            text-align: center;
-            line-height: 20px;
-            font-size: 20px;
-            color: #ffffff;
-        }
-
-        .p {
-            color: rgba(4, 31, 109, 0.7);
-        }
-
-        .video {
-            max-width: 100%;
-            height: auto;
-        }
-
 
         .footer {
             background-color: #081472;
             text-align: center;
-            padding: 10px;
+            padding: 40px 10px;
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            color: white;
+            font-size: 14px;
+            margin-top: 15px;
         }
 
         .footer img {
-            width: 50px;
-            height: 50px;
-            color: #ffffff;
+            width: 40px;
+            border-radius: 8px;
         }
 
-        .video video {
-            width: 100%;
+        /* 手機版適應：改為每行一張 */
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+            .photo-item .expand-view {
+                width: 90%;
+            }
         }
     </style>
 </head>
@@ -163,22 +219,17 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="hero-img">
-                <div class="hero-p">WELCOME DNJH ZOO</div>
-            </div>
+            <div class="hero-img"></div>
             <ul class="links">
-                <li>
-                    <h5><a href="https://youtu.be/dQw4w9WgXcQ">首頁</a></h5>
-                </li>
+                <li><h5><a href="https://youtu.be/dQw4w9WgXcQ">首頁</a></h5></li>
                 <li class="dropdown">
                     <h5><a href="#">團體區</a></h5>
                     <div class="dropdown-content">
-                        <a
-                            href="https://image.cache.storm.mg/media/image/2021/03/05/20210305-031458_U22011_M676060_ca39.gif">彩虹</a>
-                        <a
-                            href="https://memeprod.ap-south-1.linodeobjects.com/user-gif-thumbnail/2f288370c3c713377236f214a46fb534.gif">明天要交報告:</a>
-                        <a
-                            href="https://memeprod.ap-south-1.linodeobjects.com/user-maker-thumbnail/af4c6f1ad0396259ba85c4255ac3cf25.gif">看到奇怪的東西:</a>
+                        <a href="https://image.cache.storm.mg/media/image/2021/03/05/20210305-031458_U22011_M676060_ca39.gif">彩虹</a>
+                        <a href="https://memeprod.ap-south-1.linodeobjects.com/user-gif-thumbnail/2f288370c3c713377236f214a46fb534.gif">明天要交報告:</a>
+                        <a href="https://memeprod.ap-south-1.linodeobjects.com/user-maker-thumbnail/af4c6f1ad0396259ba85c4255ac3cf25.gif">看到奇怪的東西:</a>
+                        <a href="#">活動記錄</a>
+                        <a href="#">比賽回憶</a>
                     </div>
                 </li>
                 <li class="dropdown">
@@ -195,27 +246,228 @@
                         <a href="#">NO</a>
                         <a href="#">BO</a>
                         <a href="#">DY</a>
+                        <a href="#">學生作品</a>
                     </div>
+
                 </li>
             </ul>
-            <h4>
-                CLASS 15 ARTIST
-            </h4>
+            <h4>CLASS 15 ARTIST</h4>
         </div>
-        <div class="dropdown">
-            <img src="./img/正式入學 在教室成讀.jpg" alt="Cinqe Terre" width="150" hight="100">
-            <div class="dropdown-content">
-                <img src="./img/正式入學 在教室成讀.jpg" alt="Cinqe Terre" width="300" hight="200">
+
+        <!-- 相簿網格區塊 -->
+        <div class="photo-grid">
+            
+            <!-- 照片 1 -->
+            <div class="photo-item">
+                <img src="./img/正式入學 在教室成讀.jpg" alt="正式入學">
+                <span class="desc-label">正式入學 在教室晨讀</span>
+                <div class="expand-view">
+                    <img src="./img/正式入學 在教室成讀.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        這是我們剛入學時在教室晨讀的樣子，大家看起來都很認真呢！
+                    </div>
+                </div>
             </div>
-            <div class="desc">7年級</div>
+
+            <!-- 照片 2 -->
+            <div class="photo-item">
+                <img src="./img/8年一運動會 樹下.jpg" alt="8年一運動會 樹下">
+                <span class="desc-label">運動會 樹下 8年級</span>
+                <div class="expand-view">
+                    <img src="./img/8年一運動會 樹下.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        八年級運動會時在樹下的合照，那天陽光很美。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 3 -->
+            <div class="photo-item">
+                <img src="./img/8年雞運動會.jpg" alt="8年雞運動會">
+                <span class="desc-label">8年級運動會</span>
+                <div class="expand-view">
+                    <img src="./img/8年雞運動會.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        充滿活力的八年級運動會紀錄！
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 4 -->
+            <div class="photo-item">
+                <img src="./img/天地樓前 高綁老師合照8年級.jpg" alt="天地樓合照">
+                <span class="desc-label">天地樓前 師生合照 8年級</span>
+                <div class="expand-view">
+                    <img src="./img/天地樓前 高綁老師合照8年級.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        八年級時與老師在天地樓前的珍貴合影。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 5 -->
+            <div class="photo-item">
+                <img src="./img/火鍋 7年級.jpg" alt="火鍋 7年級">
+                <span class="desc-label">吃火鍋 7年級</span>
+                <div class="expand-view">
+                    <img src="./img/火鍋 7年級.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        七年級時大家一起吃火鍋的快樂時光。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 6 -->
+            <div class="photo-item">
+                <img src="./img/去故宮右側大合照 8年級.jpg" alt="故宮合照">
+                <span class="desc-label">去故宮右側大合照 8年級</span>
+                <div class="expand-view">
+                    <img src="./img/去故宮右側大合照 8年級.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        校外教學去故宮時的大合照。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 7 -->
+            <div class="photo-item">
+                <img src="./img/台江 穿救生衣[]女.jpg" alt="台江女生">
+                <span class="desc-label">校外教學 台江穿救生衣女生合照 9年級</span>
+                <div class="expand-view">
+                    <img src="./img/台江 穿救生衣[]女.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        在台江穿著救生衣準備出發的女生組。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 8 -->
+            <div class="photo-item">
+                <img src="./img/台江穿救生衣男生合照.jpg" alt="台江男生">
+                <span class="desc-label">校外教學 台江穿救生衣男生合照 9年級</span>
+                <div class="expand-view">
+                    <img src="./img/台江穿救生衣男生合照.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        男生們在台江體驗時的帥氣模樣。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 9 -->
+            <div class="photo-item">
+                <img src="./img/白三洞 9年級.jpg" alt="白三洞">
+                <span class="desc-label">白三洞 9年級</span>
+                <div class="expand-view">
+                    <img src="./img/白三洞 9年級.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        九年級的白三洞之旅。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 照片 10 -->
+            <div class="photo-item">
+                <img src="./img/在黑板前大合照7年.jpg" alt="黑板合照">
+                <span class="desc-label">在黑板前大合照 7年級</span>
+                <div class="expand-view">
+                    <img src="./img/在黑板前大合照7年.jpg" alt="放大圖">
+                    <div class="expand-desc">
+                        <strong>文字敘述：</strong><br>
+                        剛升上七年級時在教室黑板前的全班合照。
+                    </div>
+                </div>
+            </div>
+                       <!-- 新增的照片 11-20 -->
+            <div class="photo-item">
+                <img src="./img/奇美外全年級大合照 7年級.jpg" alt="奇美外大合照">
+                <span class="desc-label">奇美外全年級大合照 7年級</span>
+                <div class="expand-view">
+                    <img src="./img/奇美外全年級大合照 7年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>七年級奇美博物館外全年級壯觀的大合照。</div>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="./img/奇美博物館參訪 7年級.jpg" alt="奇美博物館參訪">
+                <span class="desc-label">奇美博物館參訪 7年級</span>
+                <div class="expand-view">
+                    <img src="./img/奇美博物館參訪 7年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>七年級參訪奇美博物館的門口紀錄。</div>
+                </div>
+            </div>
+
+
+            <div class="photo-item">
+                <img src="./img/奇美館妹講解 7年級.jpg" alt="奇美館內講解">
+                <span class="desc-label">奇美館內講解 7年級</span>
+                <div class="expand-view">
+                    <img src="./img/奇美館妹講解 7年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>七年級在奇美館內認真聽講解的樣子。</div>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="./img/故宮 清民聖河圖前休息右側8年級.jpg" alt="故宮休息區">
+                <span class="desc-label">故宮 清明上河圖前休息</span>
+                <div class="expand-view">
+                    <img src="./img/故宮 清民聖河圖前休息右側8年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>八年級在故宮清明上河圖展區旁休息的片刻。</div>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="./img/美術館外全年級大合照 9年級.jpg" alt="美術館大合照">
+                <span class="desc-label">美術館外全年級大合照 9年級</span>
+                <div class="expand-view">
+                    <img src="./img/美術館外全年級大合照 9年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>九年級美術館外的大合照，快要畢業了。</div>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="./img/美術館解說集合9年級.jpg" alt="美術館集合">
+                <span class="desc-label">美術館解說集合 9年級</span>
+                <div class="expand-view">
+                    <img src="./img/美術館解說集合9年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>九年級在美術館大廳集合準備聽解說。</div>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="./img/美術館講解 9年級.jpg" alt="美術館講解">
+                <span class="desc-label">美術館講解 9年級</span>
+                <div class="expand-view">
+                    <img src="./img/美術館講解 9年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>在美術館內專注聆聽導覽人員的說明。</div>
+                </div>
+            </div>
+
+            <div class="photo-item">
+                <img src="./img/英文老師帶我們找蛋 7年級.jpg" alt="英文老師找蛋">
+                <span class="desc-label">英文老師帶我們找蛋 7年級</span>
+                <div class="expand-view">
+                    <img src="./img/英文老師帶我們找蛋 7年級.jpg" alt="放大圖">
+                    <div class="expand-desc"><strong>文字敘述：</strong><br>七年級時英文老師帶大家玩的有趣找蛋活動！</div>
+                </div>
+            </div>
+
         </div>
     </div>
+
+    <!-- 頁尾 -->
     <div class="footer">
-        <div class="footer img">
-            <a href="https://www.instagram.com/art_815_dn?igsh=dGtmNzB3MTY2Ynph">
-                <img src="./img/IG.jpg">
-            </a>
-        </div>
+        <a href="https://www.instagram.com/art_815_dn?igsh=dGtmNzB3MTY2Ynph">
+            <img src="./img/IG.jpg" alt="Instagram">
+        </a>
         <h3>Treasure all encounters and respect all losing.</h3>
     </div>
 
